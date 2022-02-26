@@ -18,9 +18,10 @@ public class Main {
     }
 
     public static int intro() {
-        System.out.println("if you want to play a game press 1" +
-                "\nif you want to explore the games, press 2" +
-                "\nif you want a compliment, press 3(be warned the computer isn't always nice)");
+        System.out.println("""
+                if you want to play a game press 1
+                if you want to explore the games, press 2
+                if you want a compliment, press 3(be warned the computer isn't always nice)""");
 
         return sc.nextInt();
     }
@@ -35,62 +36,46 @@ class games {
         else if (choice == 2) learnGame();
         else compliments();
         out.println("Do you want to choose again?<y for yes, n for no>");
-        if (sc.next().equalsIgnoreCase("y")) return true;
-        else return false;
+        return sc.next().equalsIgnoreCase("y");
     }
 
     private static boolean learnGame() {
-        out.println("Choose 1 to learn about a wordle style game" +
-                "\n Choose 2 to learn about number guessing" +
-                "\n Choose 3 to learn about hangman" +
-                "\n Choose 4 to learn about nim" +
-                "\n Choose 5 to learn about tic tac toe" +
-                "\n Choose 0 to quit");
+        out.println("""
+                Choose 1 to learn about a wordle style game
+                Choose 2 to learn about number guessing
+                Choose 3 to learn about nim
+                Choose 4 to learn about tic tac toe
+                Choose 0 to quit
+                """);
         int choice = sc.nextInt();
         switch (choice) {
-            case 0:
-                out.println("Quitting");
-                break;
-            case 1:
-                out.println("Wordle is...");
-                break;
-            case 2:
-                out.println("Number guessing is...");
-                break;
-            case 3:
-                out.println("Hangman is...");
-                break;
-            case 4:
-                out.println("Nim is...");
-                break;
-            case 5:
-                out.println("Tic Tac Toe is...");
-                break;
-            default:
-                out.println("Invalid choice");
-                break;
+            case 0 -> out.println("Quitting");
+            case 1 -> out.println("Wordle is...");
+            case 2 -> out.println("Number guessing is...");
+            case 3 -> out.println("Hangman is...");
+            case 4 -> out.println("Nim is...");
+            case 5 -> out.println("Tic Tac Toe is...");
+            default -> out.println("Invalid choice");
         }
         return true;
     }
 
     private static boolean playGame() {
         out.println("I have a few game options, pick which you would like to play");
-        out.println("Choose 1 for a wordle style game" +
-                "\n Choose 2 for number guessing" +
-                "\n Choose 3 for hangman" +
-                "\n Choose 4 for nim" +
-                "\n Choose 5 for tic tac toe" +
-                "\n Choose 0 to quit");
+        out.println("""
+                Choose 1 for a wordle style game
+                Choose 2 for number guessing
+                Choose 3 for nim
+                Choose 4 for tic tac toe
+                Choose 0 to quit""");
         switch (sc.nextInt()) {
             case 1:
                 return wordle.main();
             case 2:
                 return numberGuess.main();
             case 3:
-                return hangman();
-            case 4:
                 return nim.main();
-            case 5:
+            case 4:
                 return tictac();
             default:
                 break;
@@ -100,7 +85,7 @@ class games {
     }
 
 
-class numberGuess {
+static class numberGuess {
     private static boolean main() {
 
 
@@ -113,7 +98,7 @@ class numberGuess {
         return true;
     }
 
-class nim {
+static class nim {
 
     private static boolean main() {
         Random r = new Random();
@@ -135,8 +120,8 @@ class nim {
         int user;
         do {
             user = sc.nextInt();
-            if (user > 3 || user < 1) {
-                out.println("That value is not between 1 and 3, try again");
+            if ((user > 3 || user < 1) || user > stones) {
+                out.println("That value is not between 1 and 3, or is greater than available stones, try again");
             }
         } while (user > 3 || user < 0);
         return user;
@@ -145,23 +130,12 @@ class nim {
     private static int nimCPUTurn(int stones) {
         Random r = new Random();
         int CPU = r.nextInt(4);
-        switch (stones) {
-            case 1:
-            case 2:
-            case 6:
-                return 1;
-            case 3:
-            case 7:
-                return 2;
-            case 4:
-            case 8:
-                return 3;
-            case 5:
-            case 9:
-            default:
-                return CPU;
-
-        }
+        return switch (stones) {
+            case 1, 2, 6, 10, 14, 18, 22, 26, 30 -> 1;
+            case 3, 7, 11, 15, 19, 23, 27 -> 2;
+            case 4, 8, 12, 16, 20, 24, 28 -> 3;
+            default -> CPU;
+        };
     }
 }
 
