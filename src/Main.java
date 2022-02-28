@@ -21,7 +21,8 @@ public class Main {
         System.out.println("""
                 if you want to play a game press 1
                 if you want to explore the games, press 2
-                if you want a compliment, press 3(be warned the computer isn't always nice)""");
+                if you want a compliment, press 3(be warned the computer isn't always nice)
+                """);
 
         return sc.nextInt();
     }
@@ -70,7 +71,7 @@ class games {
                 Choose 0 to quit""");
         switch (sc.nextInt()) {
             case 1:
-                return wordle.main();
+                return Wordle.main();
             case 2:
                 return numberGuess.main();
             case 3:
