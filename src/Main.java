@@ -36,7 +36,7 @@ class games {
         if (choice == 1) winner = playGame();
         else if (choice == 2) learnGame();
         else compliments();
-        out.println("Do you want to choose again?<y for yes, n for no>");
+        out.println("Do you want to choose a new game?<y for yes, n for no>");
         return sc.next().equalsIgnoreCase("y");
     }
 
@@ -73,11 +73,11 @@ class games {
             case 1:
                 return Wordle.main();
             case 2:
-                return numberGuess.main();
+                return NumberGuess.main();
             case 3:
                 return nim.main();
             case 4:
-                return tictac();
+                return tictac.main();
             default:
                 break;
         }
@@ -99,46 +99,7 @@ static class numberGuess {
         return true;
     }
 
-static class nim {
 
-    private static boolean main() {
-        Random r = new Random();
-        out.println("To play nim, simply have the computer pick the last set of stones, you may pull 1, 2, or 3 stones. Beware, the computer is smart");
-        int stones = r.nextInt(16) + 15;
-        do {
-            stones -= nimCPUTurn(stones);
-            if (stones > 0) stones -= nimUserTurn(stones);
-            else {
-                out.println("You win");
-                return true;
-            }
-        } while (stones > 0);
-        return false;
-    }
-
-    private static int nimUserTurn(int stones) {
-        Scanner sc = new Scanner(in);
-        int user;
-        do {
-            user = sc.nextInt();
-            if ((user > 3 || user < 1) || user > stones) {
-                out.println("That value is not between 1 and 3, or is greater than available stones, try again");
-            }
-        } while (user > 3 || user < 0);
-        return user;
-    }
-
-    private static int nimCPUTurn(int stones) {
-        Random r = new Random();
-        int CPU = r.nextInt(4);
-        return switch (stones) {
-            case 1, 2, 6, 10, 14, 18, 22, 26, 30 -> 1;
-            case 3, 7, 11, 15, 19, 23, 27 -> 2;
-            case 4, 8, 12, 16, 20, 24, 28 -> 3;
-            default -> CPU;
-        };
-    }
-}
 
     private static boolean tictac(){
 
