@@ -70,16 +70,11 @@ class games {
                 Choose 4 for tic tac toe
                 Choose 0 to quit""");
         switch (sc.nextInt()) {
-            case 1:
-                return Wordle.main();
-            case 2:
-                return NumberGuess.main();
-            case 3:
-                return nim.main();
-            case 4:
-                return tictac.main();
-            default:
-                break;
+            case 1: return Wordle.main();
+            case 2: return NumberGuess.main();
+            case 3: return nim.main();
+            case 4: return tictac.main();
+            default: break;
         }
         out.println("You chose to quit");
         return false;
