@@ -6,6 +6,7 @@ Runs tictactoe and returns if the user won or lost
 
  */
 
+import java.beans.beancontext.BeanContextServiceProviderBeanInfo;
 import java.util.*;
 
 import static java.lang.System.*;
@@ -49,7 +50,41 @@ class tictac {
     }
 
     public static void CPUturn(String[][] grid, int[][] CPUgrid) {
-
+        for (int i = 0; i < 4; i++) {
+            if((CPUgrid[i][1] == 1 && CPUgrid[i][2] == 1) && CPUgrid[i][3] == 0) {
+                CPUgrid[i][3] = 2;
+                break;
+            }
+            if((CPUgrid[i][2] == 1 && CPUgrid[i][3] == 1) && CPUgrid[i][1] == 0) {
+                CPUgrid[i][1] = 2;
+                break;
+            }
+            if((CPUgrid[1][i] == 1 && CPUgrid[2][i] == 1) && CPUgrid[3][i] == 0) {
+                CPUgrid[3][i] = 2;
+                break;
+            }
+            if((CPUgrid[2][i] == 1 && CPUgrid[3][i] == 1) && CPUgrid[1][i] == 0) {
+                CPUgrid[1][i] = 2;
+                break;
+            }
+            if((CPUgrid[2][2] == 0 && CPUgrid[1][1] == 0) && CPUgrid[3][3] == 0) {
+                CPUgrid[3][3] = 2;
+                break;
+            }
+            if((CPUgrid[2][2] == 0 && CPUgrid[1][3] == 0) && CPUgrid[3][1] == 0) {
+                CPUgrid[3][1] = 2;
+                break;
+            }
+            if((CPUgrid[2][2] == 0 && CPUgrid[3][1] == 0) && CPUgrid[3][3] == 0) {
+                CPUgrid[3][3] = 2;
+                break;
+            }
+            if((CPUgrid[2][2] == 0 && CPUgrid[3][3] == 0) && CPUgrid[1][1] == 0) {
+                CPUgrid[1][1] = 2;
+                break;
+            }
+            if
+        }
     }
 
     private static String[][] checkGuess(String[][] grid, int[][] CPUgrid, char symbol){
