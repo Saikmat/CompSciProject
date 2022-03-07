@@ -6,7 +6,6 @@ Runs tictactoe and returns if the user won or lost
 
  */
 
-import java.beans.beancontext.BeanContextServiceProviderBeanInfo;
 import java.util.*;
 
 import static java.lang.System.*;
@@ -25,7 +24,7 @@ class tictac {
                 """);
 
 
-        String[][] grid = {{"|", "-|", "-|", "-|"}, {"|", "-|", "-|", "-|"}, {"|", "-|", "-|", "-|"}};
+        char[][] grid = {{'-', '-', '-'}, {'-', '-', '-'}, {'-', '-', '-',}};
         int[][] CPUgrid = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
 
         out.println("If you want to pick a symbol, press y");
@@ -33,7 +32,7 @@ class tictac {
             out.println("Enter the character you want to use, note that input may only be one character");
             out.println("You may not use '-' as your character");
             String str = sc.next();
-            symbol = str.charAt(1);
+            symbol = str.charAt(0);
             if (symbol == '-') {
                 symbol = 'x';
                 out.println("I warned you...Your symbol is now the default 'x'");
@@ -49,70 +48,48 @@ class tictac {
         return false;
     }
 
-    public static void CPUturn(String[][] grid, int[][] CPUgrid) {
-        for (int i = 0; i < 4; i++) {
-            if((CPUgrid[i][1] == 1 && CPUgrid[i][2] == 1) && CPUgrid[i][3] == 0) {
-                CPUgrid[i][3] = 2;
-                break;
+    /**
+     * Finds all the moves that are possible on the board and determines if they are good moves or not
+     * @param grid{char} - Passes the char grid to the computer so it can be updated
+     * @param CPUgrid{int[][]} - Passes a grid of numbers so that the computer can better visualize what is happening
+     */
+    public static void CPUturn(char[][] grid, int[][] CPUgrid) {
+        String[] spaces = new String[9];
+        int counter = 0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if(CPUgrid[i][j] == 0){
+                    spaces[counter] = i + j + "";
+                    counter++;
+                }
             }
-            if((CPUgrid[i][2] == 1 && CPUgrid[i][3] == 1) && CPUgrid[i][1] == 0) {
-                CPUgrid[i][1] = 2;
-                break;
-            }
-            if((CPUgrid[1][i] == 1 && CPUgrid[2][i] == 1) && CPUgrid[3][i] == 0) {
-                CPUgrid[3][i] = 2;
-                break;
-            }
-            if((CPUgrid[2][i] == 1 && CPUgrid[3][i] == 1) && CPUgrid[1][i] == 0) {
-                CPUgrid[1][i] = 2;
-                break;
-            }
-            if((CPUgrid[2][2] == 0 && CPUgrid[1][1] == 0) && CPUgrid[3][3] == 0) {
-                CPUgrid[3][3] = 2;
-                break;
-            }
-            if((CPUgrid[2][2] == 0 && CPUgrid[1][3] == 0) && CPUgrid[3][1] == 0) {
-                CPUgrid[3][1] = 2;
-                break;
-            }
-            if((CPUgrid[2][2] == 0 && CPUgrid[3][1] == 0) && CPUgrid[3][3] == 0) {
-                CPUgrid[3][3] = 2;
-                break;
-            }
-            if((CPUgrid[2][2] == 0 && CPUgrid[3][3] == 0) && CPUgrid[1][1] == 0) {
-                CPUgrid[1][1] = 2;
-                break;
-            }
-            if
+        }
+        for(String space: spaces){
+
         }
     }
 
-    private static String[][] checkGuess(String[][] grid, int[][] CPUgrid, char symbol){
+    private static char[][] checkGuess(char[][] grid, int[][] CPUgrid, char symbol){
         boolean check;
-        int let2num = -1;
+        int let2num = 0;
         char let = 'A';
         int num = 1;
-        boolean charCheck = false;
         Scanner sc = new Scanner(in);
         out.println("Enter the CAPITAL letter first, A-C");
         let = sc.next().charAt(0);
         out.println("Now the number, 1-3");
-
         num = sc.nextInt();
-
         check = parseInput(let, num, CPUgrid, let2num);
-
         while(!check) {
             userInput(let, num);
             check = parseInput(let, num, CPUgrid, let2num);
         }
-
-
         //update grid
-        grid[num][let2num] = String.valueOf(symbol) + "|";
+        grid[num][let2num] = (symbol);
         CPUgrid[num][let2num] = 1;
         return grid;
     }
+
     private static boolean parseInput(char let, int num, int[][] grid, int let2num){
 
         if (!((let == 'A') || (let == 'B') || (let == 'C'))) return false;
