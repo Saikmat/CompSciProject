@@ -50,23 +50,28 @@ class tictac {
 
     /**
      * Finds all the moves that are possible on the board and determines if they are good moves or not
-     * @param grid{char} - Passes the char grid to the computer so it can be updated
-     * @param CPUgrid{int[][]} - Passes a grid of numbers so that the computer can better visualize what is happening
+     * @param charGrid {char} - Passes the char grid to the computer so it can be updated
+     * @param grid {char} - Passes the char grid to the computer so it can be updated
      */
-    public static void CPUturn(char[][] grid, int[][] CPUgrid) {
+
+    public static void CPUturn(char[][] charGrid, int[][] grid) {
         String[] spaces = new String[9];
+        int bestMove = 0;
         int counter = 0;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if(CPUgrid[i][j] == 0){
-                    spaces[counter] = i + j + "";
-                    counter++;
-                }
+                if(grid[i][j] == 0) spaces[counter] = String.valueOf(i) + j;
+                ++counter;
             }
         }
-        for(String space: spaces){
+        //find if there are 2 pieces that are next to each other that need to be blocked
+        if     (grid[1][1] == 1 && grid[1][2] == 1) grid[1][3] = 2;
+        else if(grid[1][1] == 1 && grid[2][2] == 1) grid[3][3] = 2;
+        else if(grid[1][1] == 1 && grid[2][1] == 1) grid[3][1] = 2;
+        else if(grid[1][1] == 1 && grid[3][1] == 1) grid[2][1] = 2;
+        else if(grid[1][1] == 1 && grid[3][3] == 1) grid[2][2] = 2;
+        else if(grid[1][1] == 1 && grid[1][3] == 1) grid[1][2] = 2;
 
-        }
     }
 
     private static char[][] checkGuess(char[][] grid, int[][] CPUgrid, char symbol){
@@ -99,9 +104,7 @@ class tictac {
         case 'C' -> let2num = 2;
         }
         if (!(num == 1 || num == 2 || num == 3)) return false;
-        if (grid[num][let2num] == 1) return false;
-
-        return true;
+        return grid[num][let2num] != 1;
     }
 
     public static void userInput(char let, int num){
