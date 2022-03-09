@@ -42,7 +42,7 @@ class tictac {
             checkGuess(grid, CPUgrid, symbol);
             out.println(Arrays.deepToString(checkGuess(grid, CPUgrid, symbol)));
             out.println("CPU turn");
-            CPUturn(grid, CPUgrid);
+            CPUblock(grid, CPUgrid);
 
         }
         return false;
@@ -54,25 +54,58 @@ class tictac {
      * @param grid {char} - Passes the char grid to the computer so it can be updated
      */
 
-    public static void CPUturn(char[][] charGrid, int[][] grid) {
-        String[] spaces = new String[9];
-        int bestMove = 0;
-        int counter = 0;
+    public static void CPUblock(char[][] charGrid, int[][] grid) {
+        Random rd = new Random();
+        List<String> spaces= new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if(grid[i][j] == 0) spaces[counter] = String.valueOf(i) + j;
-                ++counter;
+                if(grid[i][j] == 0) spaces.add(String.valueOf(i) + j);
             }
         }
-        //find if there are 2 pieces that are next to each other that need to be blocked
+        //1 row protection
         if     (grid[1][1] == 1 && grid[1][2] == 1) grid[1][3] = 2;
-        else if(grid[1][1] == 1 && grid[2][2] == 1) grid[3][3] = 2;
+        else if(grid[1][1] == 1 && grid[1][3] == 1) grid[1][2] = 2;
+        else if(grid[1][2] == 1 && grid[1][3] == 1) grid[1][1] = 2;
+        //2 row protection
+        else if(grid[2][1] == 1 && grid[2][2] == 1) grid[2][3] = 2;
+        else if(grid[2][1] == 1 && grid[2][3] == 1) grid[2][2] = 2;
+        else if(grid[2][2] == 1 && grid[2][3] == 1) grid[2][1] = 2;
+        //3 row protection
+        else if(grid[3][1] == 1 && grid[3][2] == 1) grid[3][3] = 2;
+        else if(grid[3][1] == 1 && grid[3][3] == 1) grid[3][2] = 2;
+        else if(grid[3][2] == 1 && grid[3][3] == 1) grid[3][1] = 2;
+
+        //A colunm protection
         else if(grid[1][1] == 1 && grid[2][1] == 1) grid[3][1] = 2;
         else if(grid[1][1] == 1 && grid[3][1] == 1) grid[2][1] = 2;
+        else if(grid[2][1] == 1 && grid[3][1] == 1) grid[1][1] = 2;
+        //B column protection
+        else if(grid[1][2] == 1 && grid[2][2] == 1) grid[3][2] = 2;
+        else if(grid[1][2] == 1 && grid[3][2] == 1) grid[2][2] = 2;
+        else if(grid[2][2] == 1 && grid[3][2] == 1) grid[1][2] = 2;
+        //C column protection
+        else if(grid[1][3] == 1 && grid[2][3] == 1) grid[3][3] = 2;
+        else if(grid[1][3] == 1 && grid[3][3] == 1) grid[2][3] = 2;
+        else if(grid[2][3] == 1 && grid[3][3] == 1) grid[1][3] = 2;
+        //L-R diagonal protection
+        else if(grid[1][1] == 1 && grid[2][2] == 1) grid[3][3] = 2;
         else if(grid[1][1] == 1 && grid[3][3] == 1) grid[2][2] = 2;
-        else if(grid[1][1] == 1 && grid[1][3] == 1) grid[1][2] = 2;
-
+        else if(grid[3][3] == 1 && grid[2][2] == 1) grid[1][1] = 2;
+        //R-L diagonal protection
+        else if(grid[1][3] == 1 && grid[2][2] == 1) grid[3][1] = 2;
+        else if(grid[1][3] == 1 && grid[3][1] == 1) grid[2][2] = 2;
+        else if(grid[3][1] == 1 && grid[2][2] == 1) grid[1][3] = 2;
+        else{
+            CPUBrain(grid, spaces);
+        }
     }
+
+    private static void CPUBrain(int[][] grid, List<String> spaces) {
+        Random rd = new Random();
+        String rand = spaces.get(rd.nextInt(spaces.size()));
+        grid[rand.charAt(0)][rand.charAt(1)] = 2;
+    }
+
 
     private static char[][] checkGuess(char[][] grid, int[][] CPUgrid, char symbol){
         boolean check;
