@@ -5,7 +5,7 @@ import static java.lang.System.in;
 import static java.lang.System.out;
 
 class main {
-    public static void main(String[] args) {
+    public static void main() {
         Scanner sc = new Scanner(in);
         System.out.println("This is nim, press 1 if you want to know how to play");
         if(sc.next().equalsIgnoreCase("y")) out.println("""
