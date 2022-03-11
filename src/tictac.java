@@ -39,13 +39,35 @@ class tictac {
             }
         }
         for(int i = 0; i < 9; i++) {
-            checkGuess(grid, CPUgrid, symbol);
-            out.println(Arrays.deepToString(checkGuess(grid, CPUgrid, symbol)));
+            userGuess(grid, CPUgrid, symbol);
+            out.println(Arrays.deepToString(userGuess(grid, CPUgrid, symbol)));
+            if(!checkWin(CPUgrid)) break;
             out.println("CPU turn");
             CPUblock(grid, CPUgrid);
+            if(!checkWin(CPUgrid)) break;
 
         }
         return false;
+    }
+
+    private static boolean checkWin(int[][] grid) {
+        if     (grid[1][1] == 2 && grid[1][2] == 2 && grid[1][3] == 2) return true;
+        else if(grid[2][1] == 2 && grid[2][2] == 2 && grid[2][3] == 2) return true;
+        else if(grid[3][1] == 2 && grid[3][2] == 2 && grid[3][3] == 2) return true;
+        else if(grid[1][1] == 2 && grid[2][1] == 2 && grid[3][1] == 2) return true;
+        else if(grid[1][2] == 2 && grid[2][2] == 2 && grid[3][2] == 2) return true;
+        else if(grid[1][3] == 2 && grid[2][3] == 2 && grid[3][3] == 2) return true;
+        else if(grid[1][1] == 2 && grid[2][2] == 2 && grid[3][3] == 2) return true;
+        else if(grid[1][3] == 2 && grid[2][2] == 2 && grid[3][1] == 2) return true;
+        else if(grid[1][1] == 1 && grid[1][2] == 1 && grid[1][3] == 1) return true;
+        else if(grid[2][1] == 1 && grid[2][2] == 1 && grid[2][3] == 1) return true;
+        else if(grid[3][1] == 1 && grid[3][2] == 1 && grid[3][3] == 1) return true;
+        else if(grid[1][1] == 1 && grid[2][1] == 1 && grid[3][1] == 1) return true;
+        else if(grid[1][2] == 1 && grid[2][2] == 1 && grid[3][2] == 1) return true;
+        else if(grid[1][3] == 1 && grid[2][3] == 1 && grid[3][3] == 1) return true;
+        else if(grid[1][1] == 1 && grid[2][2] == 1 && grid[3][3] == 1) return true;
+        else if(grid[1][3] == 1 && grid[2][2] == 1 && grid[3][1] == 1) return true;
+        else return false;
     }
 
     /**
@@ -63,51 +85,86 @@ class tictac {
             }
         }
         //1 row protection
-        if     (grid[1][1] == 1 && grid[1][2] == 1) grid[1][3] = 2;
-        else if(grid[1][1] == 1 && grid[1][3] == 1) grid[1][2] = 2;
-        else if(grid[1][2] == 1 && grid[1][3] == 1) grid[1][1] = 2;
+        if     (grid[1][1] == 2 && grid[1][2] == 2 && grid[1][3] == 0) grid[1][3] = 2;
+        else if(grid[1][1] == 2 && grid[1][3] == 2 && grid[1][2] == 0) grid[1][2] = 2;
+        else if(grid[1][2] == 2 && grid[1][3] == 2 && grid[1][1] == 0) grid[1][1] = 2;
         //2 row protection
-        else if(grid[2][1] == 1 && grid[2][2] == 1) grid[2][3] = 2;
-        else if(grid[2][1] == 1 && grid[2][3] == 1) grid[2][2] = 2;
-        else if(grid[2][2] == 1 && grid[2][3] == 1) grid[2][1] = 2;
+        else if(grid[2][1] == 2 && grid[2][2] == 2 && grid[2][3] == 0) grid[2][3] = 2;
+        else if(grid[2][1] == 2 && grid[2][3] == 2 && grid[2][2] == 0) grid[2][2] = 2;
+        else if(grid[2][2] == 2 && grid[2][3] == 2 && grid[2][1] == 0) grid[2][1] = 2;
         //3 row protection
-        else if(grid[3][1] == 1 && grid[3][2] == 1) grid[3][3] = 2;
-        else if(grid[3][1] == 1 && grid[3][3] == 1) grid[3][2] = 2;
-        else if(grid[3][2] == 1 && grid[3][3] == 1) grid[3][1] = 2;
+        else if(grid[3][1] == 2 && grid[3][2] == 2 && grid[3][3] == 0) grid[3][3] = 2;
+        else if(grid[3][1] == 2 && grid[3][3] == 2 && grid[3][2] == 0) grid[3][2] = 2;
+        else if(grid[3][2] == 2 && grid[3][3] == 2 && grid[3][1] == 0) grid[3][1] = 2;
 
-        //A colunm protection
-        else if(grid[1][1] == 1 && grid[2][1] == 1) grid[3][1] = 2;
-        else if(grid[1][1] == 1 && grid[3][1] == 1) grid[2][1] = 2;
-        else if(grid[2][1] == 1 && grid[3][1] == 1) grid[1][1] = 2;
+        //A column protection
+        else if(grid[1][1] == 2 && grid[2][1] == 2 && grid[3][1] == 0) grid[3][1] = 2;
+        else if(grid[1][1] == 2 && grid[3][1] == 2 && grid[2][1] == 0) grid[2][1] = 2;
+        else if(grid[2][1] == 2 && grid[3][1] == 2 && grid[1][1] == 0) grid[1][1] = 2;
         //B column protection
-        else if(grid[1][2] == 1 && grid[2][2] == 1) grid[3][2] = 2;
-        else if(grid[1][2] == 1 && grid[3][2] == 1) grid[2][2] = 2;
-        else if(grid[2][2] == 1 && grid[3][2] == 1) grid[1][2] = 2;
+        else if(grid[1][2] == 2 && grid[2][2] == 2 && grid[3][2] == 0) grid[3][2] = 2;
+        else if(grid[1][2] == 2 && grid[3][2] == 2 && grid[2][2] == 0) grid[2][2] = 2;
+        else if(grid[2][2] == 2 && grid[3][2] == 2 && grid[1][2] == 0) grid[1][2] = 2;
         //C column protection
-        else if(grid[1][3] == 1 && grid[2][3] == 1) grid[3][3] = 2;
-        else if(grid[1][3] == 1 && grid[3][3] == 1) grid[2][3] = 2;
-        else if(grid[2][3] == 1 && grid[3][3] == 1) grid[1][3] = 2;
+        else if(grid[1][3] == 2 && grid[2][3] == 2 && grid[3][3] == 0) grid[3][3] = 2;
+        else if(grid[1][3] == 2 && grid[3][3] == 2 && grid[2][3] == 0) grid[2][3] = 2;
+        else if(grid[2][3] == 2 && grid[3][3] == 2 && grid[1][3] == 0) grid[1][3] = 2;
         //L-R diagonal protection
-        else if(grid[1][1] == 1 && grid[2][2] == 1) grid[3][3] = 2;
-        else if(grid[1][1] == 1 && grid[3][3] == 1) grid[2][2] = 2;
-        else if(grid[3][3] == 1 && grid[2][2] == 1) grid[1][1] = 2;
+        else if(grid[1][1] == 2 && grid[2][2] == 2 && grid[3][3] == 0) grid[3][3] = 2;
+        else if(grid[1][1] == 2 && grid[3][3] == 2 && grid[2][2] == 0) grid[2][2] = 2;
+        else if(grid[3][3] == 2 && grid[2][2] == 2 && grid[1][1] == 0) grid[1][1] = 2;
         //R-L diagonal protection
-        else if(grid[1][3] == 1 && grid[2][2] == 1) grid[3][1] = 2;
-        else if(grid[1][3] == 1 && grid[3][1] == 1) grid[2][2] = 2;
-        else if(grid[3][1] == 1 && grid[2][2] == 1) grid[1][3] = 2;
+        else if(grid[1][3] == 2 && grid[2][2] == 2 && grid[3][1] == 0) grid[3][1] = 2;
+        else if(grid[1][3] == 2 && grid[3][1] == 2 && grid[2][2] == 0) grid[2][2] = 2;
+        else if(grid[3][1] == 2 && grid[2][2] == 2 && grid[1][3] == 0) grid[1][3] = 2;
         else{
             CPUBrain(grid, spaces);
         }
     }
 
     private static void CPUBrain(int[][] grid, List<String> spaces) {
-        Random rd = new Random();
-        String rand = spaces.get(rd.nextInt(spaces.size()));
-        grid[rand.charAt(0)][rand.charAt(1)] = 2;
+
+            //1 row move
+        if     (grid[1][1] == 2 && grid[1][2] == 2 && grid[1][3] == 0) grid[1][3] = 2;
+        else if(grid[1][1] == 2 && grid[1][3] == 2 && grid[1][2] == 0) grid[1][2] = 2;
+        else if(grid[1][2] == 2 && grid[1][3] == 2 && grid[1][1] == 0) grid[1][1] = 2;
+            //2 row move
+        else if(grid[2][1] == 2 && grid[2][2] == 2 && grid[2][3] == 0) grid[2][3] = 2;
+        else if(grid[2][1] == 2 && grid[2][3] == 2 && grid[2][2] == 0) grid[2][2] = 2;
+        else if(grid[2][2] == 2 && grid[2][3] == 2 && grid[2][1] == 0) grid[2][1] = 2;
+            //3 row protection
+        else if(grid[3][1] == 2 && grid[3][2] == 2 && grid[3][3] == 0) grid[3][3] = 2;
+        else if(grid[3][1] == 2 && grid[3][3] == 2 && grid[3][2] == 0) grid[3][2] = 2;
+        else if(grid[3][2] == 2 && grid[3][3] == 2 && grid[3][1] == 0) grid[3][1] = 2;
+        //A column move
+        else if(grid[1][1] == 2 && grid[2][1] == 2 && grid[3][1] == 0) grid[3][1] = 2;
+        else if(grid[1][1] == 2 && grid[3][1] == 2 && grid[2][1] == 0) grid[2][1] = 2;
+        else if(grid[2][1] == 2 && grid[3][1] == 2 && grid[1][1] == 0) grid[1][1] = 2;
+            //B column move
+        else if(grid[1][2] == 2 && grid[2][2] == 2 && grid[3][2] == 0) grid[3][2] = 2;
+        else if(grid[1][2] == 2 && grid[3][2] == 2 && grid[2][2] == 0) grid[2][2] = 2;
+        else if(grid[2][2] == 2 && grid[3][2] == 2 && grid[1][2] == 0) grid[1][2] = 2;
+            //C column move
+        else if(grid[1][3] == 2 && grid[2][3] == 2 && grid[3][3] == 0) grid[3][3] = 2;
+        else if(grid[1][3] == 2 && grid[3][3] == 2 && grid[2][3] == 0) grid[2][3] = 2;
+        else if(grid[2][3] == 2 && grid[3][3] == 2 && grid[1][3] == 0) grid[1][3] = 2;
+            //L-R diagonal move
+        else if(grid[1][1] == 2 && grid[2][2] == 2 && grid[3][3] == 0) grid[3][3] = 2;
+        else if(grid[1][1] == 2 && grid[3][3] == 2 && grid[2][3] == 0) grid[2][2] = 2;
+        else if(grid[3][3] == 2 && grid[2][2] == 2 && grid[1][1] == 0) grid[1][1] = 2;
+            //R-L diagonal move
+        else if(grid[1][3] == 2 && grid[2][2] == 2 && grid[3][1] == 0) grid[3][1] = 2;
+        else if(grid[1][3] == 2 && grid[3][1] == 2 && grid[2][2] == 0) grid[2][2] = 2;
+        else if(grid[3][1] == 2 && grid[2][2] == 2 && grid[1][3] == 0) grid[1][3] = 2;
+        else{
+            Random rd = new Random();
+            String rand = spaces.get(rd.nextInt(spaces.size()));
+            grid[rand.charAt(0)][rand.charAt(1)] = 2;
+        }
     }
 
 
-    private static char[][] checkGuess(char[][] grid, int[][] CPUgrid, char symbol){
+    private static char[][] userGuess(char[][] grid, int[][] CPUgrid, char symbol){
         boolean check;
         int let2num = 0;
         char let = 'A';
@@ -119,7 +176,7 @@ class tictac {
         num = sc.nextInt();
         check = parseInput(let, num, CPUgrid, let2num);
         while(!check) {
-            userInput(let, num);
+            invalid(let, num);
             check = parseInput(let, num, CPUgrid, let2num);
         }
         //update grid
@@ -140,7 +197,7 @@ class tictac {
         return grid[num][let2num] != 1;
     }
 
-    public static void userInput(char let, int num){
+    public static void invalid(char let, int num){
         Scanner sc = new Scanner(in);
         out.println("That is an invalid input");
         out.println("Enter the letter first, A-C");
