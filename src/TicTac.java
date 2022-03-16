@@ -7,13 +7,17 @@ Runs tictactoe and returns if the user won or lost
  */
 
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
 
-import static java.lang.System.*;
+import static java.lang.System.in;
+import static java.lang.System.out;
 import static java.util.Arrays.deepToString;
 
-class tictac {
-    public static boolean main() {
+class TicTac {
+    public static boolean Tic() {
         Scanner sc = new Scanner(in);
         char symbol = 'x';
         out.println("This is a game of standard 3x3 tic-tac-toe \nGet 3 in a row to win, good luck");
@@ -45,34 +49,55 @@ class tictac {
         for(int i = 0; i < 9; i++) {
             out.println("User turn");
             out.println(deepToString(userGuess(grid, CPUgrid, symbol)));
-            if(checkWin(CPUgrid)) break;
+            if(UserWin(CPUgrid)) break;
             out.println("CPU turn");
             CPUblock(grid, CPUgrid, symbol);
             out.println(deepToString(grid));
-            if(checkWin(CPUgrid)) break;
+            if(CPUWin(CPUgrid)) break;
         }
         return false;
     }
 
     @SuppressWarnings("RedundantIfStatement")
-    private static boolean checkWin(int[][] grid) {
-        if     (grid[0][0] == 2 && grid[0][1] == 2 && grid[0][2] == 2) return true;
-        else if(grid[1][0] == 2 && grid[1][1] == 2 && grid[1][2] == 2) return true;
-        else if(grid[2][0] == 2 && grid[2][1] == 2 && grid[2][2] == 2) return true;
-        else if(grid[0][0] == 2 && grid[1][0] == 2 && grid[2][0] == 2) return true;
-        else if(grid[0][1] == 2 && grid[1][1] == 2 && grid[2][1] == 2) return true;
-        else if(grid[0][2] == 2 && grid[1][2] == 2 && grid[2][2] == 2) return true;
-        else if(grid[0][0] == 2 && grid[1][1] == 2 && grid[2][2] == 2) return true;
+    private static boolean CPUWin(int[][] grid) {
+        // Check for winner by row
+        for (int[] row : grid) {
+            if (row[1] == 2 && row[2] == 2 && row[3] == 2) {
+                return true;
+            }
+        }
+
+        // Check for a winner by column
+        for (int i = 0; i < grid[0].length; i++) {
+            if (grid[0][i] == 2 && grid[1][i] == 2 && grid[2][i] == 2) {
+                return true;
+            }
+        }
+
+        // Check for a winner by diagonal
+        if(grid[0][0] == 2 && grid[1][1] == 2 && grid[2][2] == 2) return true;
         else if(grid[0][2] == 2 && grid[1][1] == 2 && grid[2][0] == 2) return true;
-        else if(grid[0][0] == 1 && grid[0][1] == 1 && grid[0][2] == 1) return true;
-        else if(grid[1][0] == 1 && grid[1][1] == 1 && grid[1][2] == 1) return true;
-        else if(grid[2][0] == 1 && grid[2][1] == 1 && grid[2][2] == 1) return true;
-        else if(grid[0][0] == 1 && grid[1][0] == 1 && grid[2][0] == 1) return true;
-        else if(grid[0][1] == 1 && grid[1][1] == 1 && grid[2][1] == 1) return true;
-        else if(grid[0][2] == 1 && grid[1][2] == 1 && grid[2][2] == 1) return true;
-        else if(grid[0][0] == 1 && grid[1][1] == 1 && grid[2][2] == 1) return true;
-        else if(grid[0][2] == 1 && grid[1][1] == 1 && grid[2][0] == 1) return true;
         else return false;
+    }
+
+    public static boolean UserWin(int[][] grid){
+        for (int[] row : grid) {
+            if (row[1] == 1 && row[2] == 1 && row[3] == 1) {
+                return true;
+            }
+        }
+
+
+        for (int i = 0; i < grid[0].length; i++) {
+            if (grid[0][i] == 1 && grid[1][i] == 1 && grid[2][i] == 1) {
+                return true;
+            }
+        }
+
+        if(grid[0][0] == 1 && grid[1][1] == 1 && grid[2][2] == 1) return true;
+        else if(grid[0][2] == 1 && grid[1][1] == 1 && grid[2][0] == 1) return true;
+
+        return false;
     }
 
     /**
@@ -89,6 +114,8 @@ class tictac {
                 if(grid[i][j] == 0) spaces.add(String.valueOf(i) + j);
             }
         }
+
+
         //1 row protection
         if     (grid[0][0] == 2 && grid[0][1] == 2 && grid[0][2] == 0) grid[0][2] = 2;
         else if(grid[0][0] == 2 && grid[0][2] == 2 && grid[0][1] == 0) grid[0][1] = 2;
@@ -124,6 +151,7 @@ class tictac {
         else if(grid[2][0] == 2 && grid[1][1] == 2 && grid[0][2] == 0) grid[0][2] = 2;
         else{
             CPUBrain(grid, spaces);
+            out.println(grid.length);
             for (int row = 0; row < 5; row+=2) {
                 for (int col = 0; col < 2; col++) {
                     if(grid[row][col] == 1) charGrid[row][col] = symbol;
@@ -172,11 +200,14 @@ class tictac {
             int a = rd.nextInt(spaces.size()-1);
             String rand = spaces.get(a);
             out.println(rand);
-            out.println(deepToString(grid));
-            int row = rand.charAt(0);
-            int col = rand.charAt(1);
-            out.println(row + "col" + col);
-            grid[row][col] = 2;
+            out.println(rand.charAt(0));
+            out.println(rand.charAt(1));
+            char rows = rand.charAt(0);
+            char cols = rand.charAt(1);
+            out.println(rows + "col" + cols);
+            int r = Integer.parseInt(String.valueOf(rows));
+            int c = Integer.parseInt(String.valueOf(cols));
+            grid[r][c] = 2;
             out.println(deepToString(grid));
         }
     }

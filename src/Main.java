@@ -1,5 +1,7 @@
-import static java.lang.System.*;
-import java.util.*;
+import java.util.Scanner;
+
+import static java.lang.System.in;
+import static java.lang.System.out;
 
 public class Main {
     static Scanner sc = new Scanner(in);
@@ -11,13 +13,12 @@ public class Main {
         int count = 0;
         do {
             options = intro();
-            flag = games.main(options);
+            flag = games.game(options);
             count++;
-        } while(!flag);
+        } while(flag);
 
-        if(games.main(options)) out.println("Wow you played " + count + "rounds of games, that's a lot");
-        else out.println("Thanks for playing, hope to see you back soon");
-
+        out.println("Wow you played " + count + " round(s) of games or other activities");
+        out.println("Thanks for playing, hope to see you back soon");
     }
 
     public static int intro() {
@@ -26,7 +27,6 @@ public class Main {
                 if you want to explore the games, press 2
                 if you want a compliment, press 3(be warned the computer isn't always nice)
                 """);
-
         return sc.nextInt();
     }
 }
