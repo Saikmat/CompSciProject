@@ -57,7 +57,6 @@ class Wordle {
                 }
             }
         }
-
         return current;
     }
 
@@ -70,7 +69,7 @@ class Wordle {
         Word word = new Word();
         int size = word.length();
         int n = r.nextInt(size);
-        return word.wordChoice(n);
+        return Word.wordChoice(n);
     }
 
     /**

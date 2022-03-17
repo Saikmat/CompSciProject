@@ -21,8 +21,12 @@ public class NumberGuess {
                 System.out.println("Your guesses were " + Arrays.toString(userGuesses));
                 return 0;
             }
-            if(CPU > user) System.out.println("Guess a higher number");
-            if(CPU < user) System.out.println("Guess a lower number");
+            if(CPU > user){
+                System.out.println("Guess a higher number");
+            }
+            if(CPU < user){
+                System.out.println("Guess a lower number");
+            }
         }
         System.out.println("You didn't get it :(");
         System.out.println("The number was " + CPU);
